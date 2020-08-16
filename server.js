@@ -59,3 +59,14 @@ app.get("/api/student", async (request, response) => {
     }
 
 });
+
+/* ------------------- DELETE STUDENT -------------------- */
+
+app.delete("/api/student/:id", async (request, response) => {
+    try {
+        var result = await Student.deleteOne({ _id: request.params.id }).exec();
+        response.send(result);
+    } catch (error) {
+        response.status(500).send(error);
+    }
+});

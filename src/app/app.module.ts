@@ -10,6 +10,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
+import {MatSortModule} from '@angular/material/sort';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatInputModule} from '@angular/material/input';
+
+
+
+
 
 
 
@@ -26,7 +35,12 @@ import {MatIconModule} from '@angular/material/icon';
     BrowserAnimationsModule,
     MatButtonModule,
     MatGridListModule,
-    MatIconModule
+    MatIconModule,
+    MatSortModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatInputModule
     
   ],
   providers: [],

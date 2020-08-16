@@ -1,22 +1,65 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
+
+import {MatPaginator} from '@angular/material/paginator';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatSort} from '@angular/material/sort';
+import {MatInputModule} from '@angular/material/input';
+
 
 // ************************* SERVICES ***********************************
 import { StudentService } from '../services/student.service';
 // ************************* SERVICES ***********************************
+
 
 @Component({
   selector: 'app-students-list',
   templateUrl: './students-list.component.html',
   styleUrls: ['./students-list.component.css']
 })
-export class StudentsListComponent implements OnInit {
-
-  students = "";
+export class StudentsListComponent implements OnInit, AfterViewInit {
   
-  constructor(private studentService: StudentService) {}
+  displayedColumns: string[] = ['firstName', 'lastName', 'major', 'email'];
+
+  dataSource = new MatTableDataSource<StudentElement>();
+  // dataSource: MatTableDataSource<StudentElement>;
+
+
+
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+  constructor(private studentService: StudentService) {
+
+
+  }
+
+    /**
+   * Set the paginator and sort after the view init since this component will
+   * be able to query its view for the initialized paginator and sort.
+   */
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
+
+  
   
   ngOnInit(): void {
     this.getStudents();
+    // setTimeout(() => this.dataSource.sort = this.sort);
+    // setTimeout(() => this.dataSource.paginator = this.paginator);
+    setTimeout(()=>{
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    }, 1000);
+
   }
 
   getStudents(){
@@ -26,9 +69,7 @@ export class StudentsListComponent implements OnInit {
     this.studentService.getStudents().subscribe(
       data => {
 
-        this.students = JSON.stringify(data);
-        console.log(data)
-
+        this.dataSource = new MatTableDataSource(data);
 
       }, 
       
@@ -38,4 +79,12 @@ export class StudentsListComponent implements OnInit {
     //Consuming service
   }
 
+}
+
+
+export interface StudentElement {
+  firstName: string;
+  lastName: string;
+  major: string;
+  email: string;
 }
