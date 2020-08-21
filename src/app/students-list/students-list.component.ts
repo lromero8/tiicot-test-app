@@ -4,6 +4,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material/sort';
 import {MatInputModule} from '@angular/material/input';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 
 // ************************* SERVICES ***********************************
@@ -29,7 +30,7 @@ export class StudentsListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private studentService: StudentService) {
+  constructor(private studentService: StudentService, private router: Router,) {
 
 
   }
@@ -77,6 +78,10 @@ export class StudentsListComponent implements OnInit, AfterViewInit {
         console.log(error)
       });
     //Consuming service
+  }
+
+  createStudentFunction(){
+    this.router.navigate(['/create'])
   }
 
 }
