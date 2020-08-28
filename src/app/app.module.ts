@@ -22,6 +22,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
 
 
 
@@ -51,7 +53,9 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     MatDialogModule,
     MatDatepickerModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatSelectModule
     
   ],
   providers: [EventEmitterService],

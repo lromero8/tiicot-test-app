@@ -1,1 +1,47 @@
-<h1>create student component</h1>
+<div class="example-container">
+    <div class="form-container">
+      <form [formGroup]="createForm" (submit)="submit()">
+
+        <mat-form-field class="form-field" appearance="standard">
+            <mat-label> First Name
+            </mat-label>
+            <input matInput formControlName="firstName" required>
+            <mat-error *ngIf="createForm.controls.firstName.touched && createForm.controls.firstName.invalid">
+              <span *ngIf="createForm.controls.firstName.errors.required">This field is mandatory.</span>
+            </mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="form-field" appearance="standard">
+            <mat-label> Last Name
+            </mat-label>
+            <input matInput formControlName="lastName" required>
+            <mat-error *ngIf="createForm.controls.lastName.touched && createForm.controls.lastName.invalid">
+              <span *ngIf="createForm.controls.lastName.errors.required">This field is mandatory.</span>
+            </mat-error>
+        </mat-form-field> 
+        <br>
+
+        <mat-form-field class="form-field" appearance="standard">
+            <mat-label>Major</mat-label>
+            <mat-select formControlName="major" required>
+              <mat-option *ngFor="let major of majors" [value]="major.value">
+                {{major.viewValue}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <br>
+
+        <mat-form-field class="form-field" appearance="standard">
+            <mat-label> E-mail
+            </mat-label>
+            <input matInput formControlName="email" required>
+            <mat-error *ngIf="createForm.controls.email.touched && createForm.controls.email.invalid">
+              <span *ngIf="createForm.controls.email.errors.required">This field is mandatory.</span>
+              <span *ngIf="createForm.controls.email.errors.pattern">This field is invalid.</span>
+            </mat-error>
+        </mat-form-field>
+        <br>
+        <button mat-raised-button color="primary" type="submit">Create</button>
+      </form>
+    </div>
+  </div>

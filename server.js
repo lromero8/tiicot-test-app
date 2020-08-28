@@ -36,7 +36,11 @@ app.post("/api/student", (req, res) => {
     var myData = new Student(req.body);
     myData.save()
         .then(item => {
-            res.send("Student saved to database");
+            // res.send("Student saved to database");
+            res.status(200).json({
+                status: 200,
+                msg: 'Student saved to database',
+            });
         })
         .catch(err => {
             res.status(400).send("Unable to save to database");
