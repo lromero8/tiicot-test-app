@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { StudentsListComponent } from './students-list/students-list.component';
-import { CreateStudentComponent } from './create-student/create-student.component';
 import { EventEmitterService } from './services/event-emitter.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -24,6 +23,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
+import {ModalComponent} from './modal/modal.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 
@@ -34,7 +35,7 @@ import {MatSelectModule} from '@angular/material/select';
   declarations: [
     AppComponent,
     StudentsListComponent,
-    CreateStudentComponent
+    ModalComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +56,8 @@ import {MatSelectModule} from '@angular/material/select';
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSnackBarModule
     
   ],
   providers: [EventEmitterService],

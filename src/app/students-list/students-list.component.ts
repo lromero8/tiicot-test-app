@@ -1,10 +1,14 @@
 import { Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 
-import {MatPaginator} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatSort} from '@angular/material/sort';
-import {MatInputModule} from '@angular/material/input';
-import { Router } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+
+import { MatDialog } from '@angular/material/dialog'
+
+import { ModalComponent } from '../modal/modal.component';
+
 
 
 // ************************* SERVICES ***********************************
@@ -30,7 +34,10 @@ export class StudentsListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private studentService: StudentService, private router: Router,) {
+  constructor(
+    private studentService: StudentService, 
+    public dialog: MatDialog,
+    private activatedRoute: ActivatedRoute) {
 
 
   }
@@ -61,6 +68,18 @@ export class StudentsListComponent implements OnInit, AfterViewInit {
       this.dataSource.paginator = this.paginator;
     }, 1000);
 
+    // Refreshing component from modal
+    this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
+      const refresh = paramMap.get('refresh');
+      if (refresh) {
+        this.getStudents()
+        setTimeout(()=>{
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        }, 1000);
+      }
+    });
+
   }
 
   getStudents(){
@@ -80,9 +99,14 @@ export class StudentsListComponent implements OnInit, AfterViewInit {
     //Consuming service
   }
 
-  createStudentFunction(){
-    this.router.navigate(['/create'])
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ModalComponent, {
+      width: '300px',
+      data: {}
+    });
   }
+
 
 }
 

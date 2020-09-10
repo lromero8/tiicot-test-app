@@ -1,11 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { CommonModule } from '@angular/common';  
-import { EventEmitterService } from '../services/event-emitter.service';    
-
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {MatSelectModule} from '@angular/material/select';
+import { MatDialogRef } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 // ************************* SERVICES ***********************************
@@ -13,24 +10,17 @@ import { StudentService } from '../services/student.service';
 // ************************* SERVICES ***********************************
 
 
-
-export interface DialogData {
-  animal: 'panda' | 'unicorn' | 'lion';
-}
-
 interface Major {
   value: string;
   viewValue: string;
 }
 
-
 @Component({
-  selector: 'app-create-student',
-  templateUrl: './create-student.component.html',
-  styleUrls: ['./create-student.component.css']
+  selector: 'app-modal',
+  templateUrl: './modal.component.html',
+  styleUrls: ['./modal.component.css']
 })
-
-export class CreateStudentComponent implements OnInit{
+export class ModalComponent implements OnInit {
 
   createForm: FormGroup;
   emailRegx = /^(([^<>+()\[\]\\.,;:\s@"-#$%&=]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,3}))$/;
@@ -44,42 +34,26 @@ export class CreateStudentComponent implements OnInit{
     {value: 'ME', viewValue: 'Medicine'},
     {value: 'PH', viewValue: 'Philosophy'}
   ];
-
-
+  
 
   constructor(
-
-    public dialog: MatDialog,
-    private eventEmitterService: EventEmitterService,
+    public dialogRef: MatDialogRef<ModalComponent>,
     private formBuilder: FormBuilder,
     private studentService: StudentService,
-    private router: Router
+    private router: Router,
+    private _snackBar: MatSnackBar
+    ) {}
 
-    ) {
-
+  onNoClick(): void {
+    this.dialogRef.close();
   }
-  
-  ngOnInit() {
-    if (this.eventEmitterService.subsVar==undefined) {    
-      this.eventEmitterService.subsVar = this.eventEmitterService.    
-      invokeFirstComponentFunction.subscribe((name:string) => {    
-        this.openDialog()
-      });    
-    }
 
+  ngOnInit() {
     this.createForm = this.formBuilder.group({
       firstName: [null, Validators.required],
       lastName: [null, Validators.required],
       major: [null, Validators.required],
       email: [null, [Validators.required, Validators.pattern(this.emailRegx)]]
-    });
-  }
-
-  openDialog() {
-    this.dialog.open(DialogDataExampleDialog, {
-      data: {
-        animal: 'panda'
-      }
     });
   }
 
@@ -95,7 +69,16 @@ export class CreateStudentComponent implements OnInit{
       data => {
 
         console.log(data);
-        this.router.navigate(['/list']);
+        this.dialogRef.close();
+        this.router.navigate(['/list'], {
+          queryParams: {refresh: new Date().getTime()}
+        });
+        this._snackBar.open('Student Created!', 'Insert', {
+          duration: 2000,
+          verticalPosition: 'top'
+    
+        });
+
 
 
       }, 
@@ -110,15 +93,4 @@ export class CreateStudentComponent implements OnInit{
     //Consuming service
 
   }
-
 }
-
-
-@Component({
-  selector: 'dialog-data-example-dialog',
-  templateUrl: 'dialog-data-example-dialog.html',
-})
-export class DialogDataExampleDialog {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-}
-
