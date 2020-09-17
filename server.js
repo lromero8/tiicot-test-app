@@ -64,6 +64,28 @@ app.get("/api/student", async (request, response) => {
 
 });
 
+/* ------------------- UPDATE STUDENT -------------------- */
+
+
+app.put("/api/student/:id", async (req, res) => {
+
+    // console.log(req)
+
+    var result = await Student.findByIdAndUpdate(req.params.id, {
+        $set: req.body
+    }, (error, data) => {
+        if (error) {
+            console.log(error);
+            return error;
+        } else {
+            res.json(data)
+            // console.log('Data updated successfully')
+        }
+    });
+
+
+})
+
 /* ------------------- DELETE STUDENT -------------------- */
 
 app.delete("/api/student/:id", async (request, response) => {

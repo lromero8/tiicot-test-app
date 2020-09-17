@@ -25,6 +25,14 @@ export class StudentService {
         }));
   }
 
+  // put("/api/student")
+  public updateStudents(id, request:any) {
+    return this.http.put('http://localhost:5000/api/student/' + id, request)
+    .pipe(map(data => {
+        return data;
+        }));
+  }
+
   public findStudent(request:any) {
     return this.http.get<any>('/find/' + request)
     .pipe(map(data => {

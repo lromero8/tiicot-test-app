@@ -4,6 +4,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import {MatIconModule} from '@angular/material/icon';
+
 
 import { MatDialog } from '@angular/material/dialog'
 
@@ -15,6 +17,10 @@ import { ModalComponent } from '../modal/modal.component';
 import { StudentService } from '../services/student.service';
 // ************************* SERVICES ***********************************
 
+interface Major {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-students-list',
@@ -23,10 +29,21 @@ import { StudentService } from '../services/student.service';
 })
 export class StudentsListComponent implements OnInit, AfterViewInit {
   
-  displayedColumns: string[] = ['firstName', 'lastName', 'major', 'email'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'major', 'email', 'edit'];
 
   dataSource = new MatTableDataSource<StudentElement>();
   // dataSource: MatTableDataSource<StudentElement>;
+
+  majors: Major[] = [
+    {value: 'CCSM', viewValue: 'Child Care Services Management'},
+    {value: 'CS', viewValue: 'Computer Science'},
+    {value: 'IE', viewValue: 'Industrial Engineering'},
+    {value: 'HSA', viewValue: 'Health Services Administration'},
+    {value: 'ME', viewValue: 'Medicine'},
+    {value: 'PH', viewValue: 'Philosophy'},
+    {value: 'MK', viewValue: 'Marketing'},
+    {value: 'BU', viewValue: 'Business'}
+  ];
 
 
 
@@ -89,6 +106,19 @@ export class StudentsListComponent implements OnInit, AfterViewInit {
     this.studentService.getStudents().subscribe(
       data => {
 
+        // Maping major value with viewValue
+        data.map((item, index) => {
+          // console.log(item.major)
+          this.majors.map((major, index) => {
+            // console.log(major.value)
+            if (item.major == major.value) {
+              item.viewValue = major.viewValue
+            }
+          })
+        })
+        // console.log(data)
+
+
         this.dataSource = new MatTableDataSource(data);
 
       }, 
@@ -105,6 +135,23 @@ export class StudentsListComponent implements OnInit, AfterViewInit {
       width: '300px',
       data: {}
     });
+  }
+
+  openEditDialog(row): void {
+    const dialogRef = this.dialog.open(ModalComponent, {
+      width: '300px',
+      data: {
+        edit: true,
+        email: row.email,
+        firstName: row.firstName,
+        lastName: row.lastName,
+        major: row.major,
+        _v: row.__v,
+        _id: row._id
+
+      }
+    });
+    // console.log(row)
   }
 
 

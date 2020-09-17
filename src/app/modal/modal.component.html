@@ -1,6 +1,6 @@
 <div class="example-container">
     <div class="form-container">
-        <h3>Create Student</h3>
+        <h3>{{data.edit? 'Update' : 'Create'}} Student</h3>
         <br>
       <form [formGroup]="createForm" (submit)="submit()">
 
@@ -43,7 +43,7 @@
             </mat-error>
         </mat-form-field>
         <br>
-        <button mat-raised-button color="primary" type="submit">Create</button>
+        <button mat-raised-button color="primary" type="submit">{{data.edit? 'Update' : 'Create'}}</button>
       </form>
     </div>
   </div>
