@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 
 
 import { MatDialog } from '@angular/material/dialog'
@@ -29,7 +29,7 @@ interface Major {
 })
 export class StudentsListComponent implements OnInit, AfterViewInit {
   
-  displayedColumns: string[] = ['firstName', 'lastName', 'major', 'email', 'edit'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'major', 'email', 'actions'];
 
   dataSource = new MatTableDataSource<StudentElement>();
   // dataSource: MatTableDataSource<StudentElement>;
@@ -135,6 +135,7 @@ export class StudentsListComponent implements OnInit, AfterViewInit {
       width: '300px',
       data: {}
     });
+    dialogRef.updatePosition({ top: '5%' })
   }
 
   openEditDialog(row): void {
@@ -142,6 +143,7 @@ export class StudentsListComponent implements OnInit, AfterViewInit {
       width: '300px',
       data: {
         edit: true,
+        delete: false,
         email: row.email,
         firstName: row.firstName,
         lastName: row.lastName,
@@ -151,6 +153,20 @@ export class StudentsListComponent implements OnInit, AfterViewInit {
 
       }
     });
+    dialogRef.updatePosition({ top: '5%' })
+    // console.log(row)
+  }
+
+  openDeleteDialog(row): void {
+    const dialogRef = this.dialog.open(ModalComponent, {
+      width: '300px',
+      data: {
+        delete: true,
+        _id: row._id
+      }
+    });
+    dialogRef.updatePosition({ top: '5%' })
+
     // console.log(row)
   }
 

@@ -17,6 +17,7 @@ interface Major {
 
 interface DialogData {
   edit: Boolean,
+  delete: Boolean,
   email: string,
   firstName: string,
   lastName: string,
@@ -147,5 +148,37 @@ export class ModalComponent implements OnInit {
     //Consuming service      
     }
 
+  }
+
+
+  delete(){
+    // console.log(this.data._id)
+    // Consuming service
+    this.studentService.deleteStudents(this.data._id).subscribe(
+      data => {
+
+        // console.log(data);
+        this.dialogRef.close();
+        this.router.navigate(['/list'], {
+          queryParams: {refresh: new Date().getTime()}
+        });
+        this._snackBar.open('Student Deleted!', 'Delete', {
+          duration: 2000,
+          verticalPosition: 'top'
+    
+        });
+
+
+
+      }, 
+      
+      error => {   
+        console.log(error)
+      },
+      
+      () => {
+        // do something when operation successfully complete
+      });
+    //Consuming service 
   }
 }

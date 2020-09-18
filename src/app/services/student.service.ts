@@ -33,11 +33,19 @@ export class StudentService {
         }));
   }
 
-  public findStudent(request:any) {
-    return this.http.get<any>('/find/' + request)
+  // delete("/api/student")
+  public deleteStudents(id) {
+    return this.http.delete('http://localhost:5000/api/student/' + id)
     .pipe(map(data => {
         return data;
         }));
   }
+
+  // public findStudent(request:any) {
+  //   return this.http.get<any>('/find/' + request)
+  //   .pipe(map(data => {
+  //       return data;
+  //       }));
+  // }
 
 }

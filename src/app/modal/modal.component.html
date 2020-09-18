@@ -1,8 +1,8 @@
 <div class="example-container">
     <div class="form-container">
-        <h3>{{data.edit? 'Update' : 'Create'}} Student</h3>
+        <h3>{{data.edit? 'Update' : data.delete? 'Delete' : 'Create'}} Student</h3>
         <br>
-      <form [formGroup]="createForm" (submit)="submit()">
+      <form *ngIf="!data.delete" [formGroup]="createForm" (submit)="submit()">
 
         <mat-form-field class="form-field" appearance="standard">
             <mat-label> First Name
@@ -45,5 +45,19 @@
         <br>
         <button mat-raised-button color="primary" type="submit">{{data.edit? 'Update' : 'Create'}}</button>
       </form>
+
+
+      <div *ngIf="data.delete">
+        <h3>Are you sure you want to delete this student?</h3>
+        <mat-grid-list cols="2" rowHeight="2:1">
+          <mat-grid-tile>
+            <button mat-raised-button color="secondary" (click)="onNoClick()">Cancel</button>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <button mat-raised-button color="primary" (click)="delete()">Delete</button>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+
     </div>
   </div>
