@@ -18,8 +18,8 @@ app.use(bodyParser.json());
 app.use(cors())
 
 // Create link to Angular build directory
-// var distDir = __dirname + "/dist/";
-// app.use(express.static(distDir));
+var distDir = __dirname + "/dist/";
+app.use(express.static(distDir));
 
 
 const PORT = process.env.PORT || 5000;
