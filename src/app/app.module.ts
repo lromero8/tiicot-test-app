@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { StudentsListComponent } from './students-list/students-list.component';
-import { EventEmitterService } from './services/event-emitter.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {MatButtonModule} from '@angular/material/button';
@@ -59,7 +58,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatSnackBarModule
     
   ],
-  providers: [EventEmitterService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

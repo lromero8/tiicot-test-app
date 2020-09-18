@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EventEmitterService } from './services/event-emitter.service';
 import { Router } from '@angular/router';
 
 
@@ -15,16 +14,12 @@ export class AppComponent implements OnInit{
 
 
 
-  constructor(private eventEmitterService: EventEmitterService, private router: Router){}
+  constructor(private router: Router){}
 
 
   ngOnInit() {
     this.router.navigate(['/list'])
   }
-
-  // firstComponentFunction(){    
-  //   this.eventEmitterService.onFirstComponentButtonClick();    
-  // }
 
 
 }
