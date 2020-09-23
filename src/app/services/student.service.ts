@@ -11,7 +11,7 @@ export class StudentService {
 
   // get("/api/student")
   public getStudents() {
-    return this.http.get<any>('http://localhost:5000/api/student')
+    return this.http.get<any>('/api/student')
     .pipe(map(data => {
         return data;
         }));
@@ -19,7 +19,7 @@ export class StudentService {
 
   // post("/api/student")
   public postStudents(request:any) {
-    return this.http.post<any>('http://localhost:5000/api/student', request)
+    return this.http.post<any>('/api/student', request)
     .pipe(map(data => {
         return data;
         }));
@@ -27,7 +27,7 @@ export class StudentService {
 
   // put("/api/student")
   public updateStudents(id, request:any) {
-    return this.http.put('http://localhost:5000/api/student/' + id, request)
+    return this.http.put('/api/student/' + id, request)
     .pipe(map(data => {
         return data;
         }));
@@ -35,7 +35,7 @@ export class StudentService {
 
   // delete("/api/student")
   public deleteStudents(id) {
-    return this.http.delete('http://localhost:5000/api/student/' + id)
+    return this.http.delete('/api/student/' + id)
     .pipe(map(data => {
         return data;
         }));
